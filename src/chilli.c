@@ -1299,6 +1299,7 @@ int chilli_req_attrs(struct radius_t *radius,
 
   switch(pack->code) {
     case RADIUS_CODE_ACCESS_REQUEST:
+    case RADIUS_CODE_ACCOUNTING_REQUEST:
 
       if (_options.radiusoriginalurl) {
         if (state->redir.userurl[0])

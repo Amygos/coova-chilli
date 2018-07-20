@@ -983,6 +983,15 @@ static void process_radius(struct radius_t *radius, struct radius_packet_t *pack
 
     if (!radius_getattr(pack, &attr, RADIUS_ATTR_VENDOR_SPECIFIC,
 			RADIUS_VENDOR_COOVACHILLI,
+			RADIUS_ATTR_COOVACHILLI_USER_AGENT, 0)) {
+      bcatcstr(req->url, "&user_agent=");
+      bassignblk(tmp, attr->v.t, attr->l-2);
+      redir_urlencode(tmp, tmp2);
+      bconcat(req->url, tmp2);
+    }
+
+    if (!radius_getattr(pack, &attr, RADIUS_ATTR_VENDOR_SPECIFIC,
+			RADIUS_VENDOR_COOVACHILLI,
 			RADIUS_ATTR_COOVACHILLI_DHCP_PARAMETER_REQUEST_LIST, 0)) {
       uint8_t l = attr->l;
       if (l > 2) {
